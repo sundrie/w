@@ -68,15 +68,15 @@ class Controller
 	public function show($file, array $data = array())
 	{
 		//incluant le chemin vers nos vues
-		$engine = new \League\Plates\Engine('../app/Views');
+		$engine = new \League\Plates\Engine(self::PATH_VIEWS);
 
 		//charge nos extensions (nos fonctions personnalisées)
 		$engine->loadExtension(new \W\View\Plates\PlatesExtensions());
 
 		$app = getApp();
 
-		// rend certaines données disponibles à tous les vues
-		// accessible avec $w_user dans les fichiers de vue
+		// Rend certaines données disponibles à tous les vues
+		// accessible avec $w_user & $w_current_route dans les fichiers de vue
 		$engine->addData(
 			[
 				'w_user' 		  => $this->getUser(),
