@@ -34,13 +34,18 @@ abstract class Model
 	{
 		$app = getApp();
 
-		// Nom de la class enfant
-		$className = get_class($this);
+		if(empty($this->table)){
+			// Nom de la class enfant
+			$className = get_class($this);
 
-		// Retire le Model et les antislashes et converti en underscore_case (snake_case)
-		$tableName = str_replace('Model', '', $className);
-		$tableName = explode('\\', $tableName);
-		$tableName = ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', end($tableName))), '_');
+			// Retire le Model et les antislashes et converti en underscore_case (snake_case)
+			$tableName = str_replace('Model', '', $className);
+			$tableName = explode('\\', $tableName);
+			$tableName = ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', end($tableName))), '_');
+		}
+		else {
+			$tableName = $this->table;
+		}
 
 		$this->table = $app->getConfig('db_table_prefix') . $tableName;
 
@@ -135,7 +140,7 @@ abstract class Model
 				die('Error: invalid offset param');
 			}
 
-			$sql .= ' ORDER BY $orderBy $orderDir';
+			$sql .= ' ORDER BY '.$orderBy.' '.$orderDir;
 			if($limit){
 				$sql .= ' LIMIT '.$limit;
 				if($offset){
