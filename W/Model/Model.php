@@ -172,7 +172,7 @@ abstract class Model
         $sql = 'SELECT * FROM ' . $this->table.' WHERE';
                 
 		foreach($search as $key => $value){
-			$sql .= " $key LIKE :$key ";
+			$sql .= " `$key` LIKE :$key ";
 			$sql .= $operator;
 		}
 		// Supprime les caractères superflus en fin de requète
@@ -222,7 +222,7 @@ abstract class Model
 	{
 
 		$colNames = array_keys($data);
-		$colNamesString = implode(', ', $colNames);
+		$colNamesString = implode(', ', '`'.$colNames.'`');
 
 		$sql = 'INSERT INTO ' . $this->table . ' (' . $colNamesString . ') VALUES (';
 		foreach($data as $key => $value){
@@ -259,7 +259,7 @@ abstract class Model
 		
 		$sql = 'UPDATE ' . $this->table . ' SET ';
 		foreach($data as $key => $value){
-			$sql .= "$key = :$key, ";
+			$sql .= "`$key` = :$key, ";
 		}
 		// Supprime les caractères superflus en fin de requète
 		$sql = substr($sql, 0, -2);
