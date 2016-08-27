@@ -36,12 +36,11 @@ abstract class Model
 
 		if(empty($this->table)){
 			// Nom de la class enfant
-			$className = get_class($this);
+			$className = (new \ReflectionClass($this))->getShortName();
 
-			// Retire le Model et les antislashes et converti en underscore_case (snake_case)
+			// Retire le Model et converti en underscore_case (snake_case)
 			$tableName = str_replace('Model', '', $className);
-			$tableName = explode('\\', $tableName);
-			$tableName = ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', end($tableName))), '_');
+			$tableName = ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', $tableName)), '_');
 		}
 		else {
 			$tableName = $this->table;
@@ -110,6 +109,44 @@ abstract class Model
 
 		return $sth->fetch();
 	}
+
+    /**
+     * Récupère la ligne suivante de celle de l'identifiant
+     * @param integer Identifiant
+     * @return mixed Les données sous forme de tableau associatif
+     * @todo Retourner la première ligne si id est la dernière ligne
+     */
+    public function findNext($id){
+        if (!is_numeric($id)){
+            return false;
+        }
+
+        $sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->primaryKey .'  = (SELECT MIN(id) FROM ' . $this->table . ' WHERE id > :id ) LIMIT 1';
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindValue(':id', $id);
+        $sth->execute();
+
+        return $sth->fetch();
+    }
+
+    /**
+     * Récupère la ligne précédente de celle de l'identifiant
+     * @param integer Identifiant
+     * @return mixed Les données sous forme de tableau associatif
+     * @todo Retourner la dernière ligne si id est la première ligne
+     */
+    public function findPrevious($id){
+        if (!is_numeric($id)){
+            return false;
+        }
+
+        $sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->primaryKey .'  = (SELECT MAX(id) FROM ' . $this->table . ' WHERE id < :id ) LIMIT 1';
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindValue(':id', $id);
+        $sth->execute();
+
+        return $sth->fetch();
+    }
 
 	/**
 	 * Récupère toutes les lignes de la table
