@@ -259,7 +259,8 @@ abstract class Model
 	{
 
 		$colNames = array_keys($data);
-		$colNamesString = implode(', ', '`'.$colNames.'`');
+		$colNamesEscapes = $this->escapeKeys($colNames);
+		$colNamesString = implode(', ', $colNamesEscapes);
 
 		$sql = 'INSERT INTO ' . $this->table . ' (' . $colNamesString . ') VALUES (';
 		foreach($data as $key => $value){
@@ -323,4 +324,16 @@ abstract class Model
 	{
 		return $this->dbh->lastInsertId();
 	}
+
+	/**
+	 * Echappe les clés d'un tableau pour les mots clés réservés par SQL
+	 * @param array $datas Une tableau de clé
+	 * @return Les clés échappées
+	 */
+	private function escapeKeys($datas)
+	{
+		return array_map(function($val){
+			return '`'.$val.'`';
+		}, $datas);
+	}	
 }
