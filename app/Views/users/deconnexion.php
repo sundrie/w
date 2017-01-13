@@ -1,6 +1,6 @@
 <?php $this->layout('layout', ['title' => 'Utilisateur']) ?>
 
 <?php $this->start('main_content') ?>
-<h2>De&acute;connexion</h2>
-<p>Vous avez e&acute;te&acute; correctement de&acute;connecte&acute;</p>
+<h2>D&eacute;connexion</h2>
+<p>Vous avez &eacute;t&eacute; correctement d&eacute;connect&eacute;</p>
 <?php $this->stop('main_content') ?>

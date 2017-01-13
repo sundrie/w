@@ -12,5 +12,6 @@
 		//  Routes concernant les utilisateurs
 		['GET|POST', '/users/', 'UsersController#afficher', 'users'],
 		['GET|POST', '/users/inscription/', 'UsersController#inscriptionform', 'inscription'],
-		['GET|POST', '/users/connexion/', 'UsersController#connexionform', 'connexion']
+		['GET|POST', '/users/connexion/', 'UsersController#connexionform', 'connexion'],
+		['GET|POST', '/users/deconnexion/','UsersController#deconnexion','deconnexion']
 	);

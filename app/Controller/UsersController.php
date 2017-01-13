@@ -31,8 +31,6 @@ class UsersController extends Controller
   }
 
 	public function connexionform() {
-	// 	$tintin = new LoginModel("jeanmich@gmail.com");
-  //   var_dump($tintin);
 
 		if (isset($_POST['connexion'])){
 			// On instancie un nouvel objet car les méthodes de la classe ne sont pas static
@@ -49,7 +47,10 @@ class UsersController extends Controller
 	}
 
 	public function deconnexion(){
+		$auth = new AuthentificationModel();
+		$decoUser = $auth -> logUserOut();
 
+		$this->show('users/deconnexion');
 	}
 
 }
