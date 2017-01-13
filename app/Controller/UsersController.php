@@ -48,4 +48,8 @@ class UsersController extends Controller
 		$this->show('users/connexion');
 	}
 
+	public function deconnexion(){
+
+	}
+
 }

@@ -5,5 +5,5 @@
 	<p>Vous avez atteint la page d'utilisateurs. Bravo.</p>
 	<p><a href="inscription/" title="Inscription">Inscription</a></p>
 	<p><a href="connexion/" title="Connexion">Connexion</a></p>
-	<p><a href="" title="Deconnexion">D&eacute;connexion</a></p>
+	<?php if (isset($_SESSION['user'])) {	 ?><p><a href="deconnexion/" title="Deconnexion">D&eacute;connexion</a></p><?php } ?>
 <?php $this->stop('main_content') ?>
