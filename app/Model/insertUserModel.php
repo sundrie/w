@@ -11,9 +11,12 @@ class insertUserModel extends Model
     // On appelle la méthode pour créer un PDO à notre bdd
     $instance = $dbhConnect -> getDbh();
     // requête d'ajout d'un utilisateur
-    $sql = "INSERT INTO users (username, email, password)
-    VALUES ('".$newUser['username']."','".$newUser['email']."','".$newUser['password']."')";
+    $sql = $instance->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
 
-    $insertSuccess = $instance->exec($sql);
+    $insertSuccess = $sql->execute(array(
+      "username" => $newUser['username'],
+      "email" => $newUser['email'],
+      "password" => $newUser['password']
+    ));
   }
 }

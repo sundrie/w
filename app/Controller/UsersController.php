@@ -49,7 +49,7 @@ class UsersController extends Controller
 	public function deconnexion(){
 		$auth = new AuthentificationModel();
 		$decoUser = $auth -> logUserOut();
-
+		
 		$this->show('users/deconnexion');
 	}
 
