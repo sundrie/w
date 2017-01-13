@@ -18,10 +18,11 @@ class UsersController extends Controller
 
   public function inscriptionform() {
 		if(isset($_POST['inscription'])){
+			$cryptedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
 			$newUser = array(
 	      "username" => $_POST['username'],
 	      "email" => $_POST['email'],
-	      "password" => $_POST['password']
+	      "password" => $cryptedPassword
 			);
 			$insertUser = new insertUserModel();
 			$insertion = $insertUser -> insertUser($newUser);
