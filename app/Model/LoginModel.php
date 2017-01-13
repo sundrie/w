@@ -1,7 +1,6 @@
 <?php
 namespace Model;
 use W\Model\UsersModel;
-//class LoginModel extends \W\Model\Model
 class LoginModel extends UsersModel
 {
     public $email;
