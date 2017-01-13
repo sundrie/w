@@ -34,18 +34,17 @@ class UsersController extends Controller
 	// 	$tintin = new LoginModel("jeanmich@gmail.com");
   //   var_dump($tintin);
 
-		// $instance = ConnectionModel::getDbh();
 		if (isset($_POST['connexion'])){
 			// On instancie un nouvel objet car les méthodes de la classe ne sont pas static
 		  $authUser = new AuthentificationModel();
+			// $userID nous renvoie l'ID de l'utilisateur si les infos sont correctes sinon il renvoie 0
 			$userID = $authUser -> isValidLoginInfo($_POST['email'], $_POST['password']);
-			var_dump($userID);
+			$user = array(
+				'email' => $_POST['email'],
+				'password' => $_POST['password']
+		 );
+			$connectUser = $authUser -> logUserIn($user);
 		}
-
-		// if ($authUser != 0){
-		//
-		// }
-
 		$this->show('users/connexion');
 	}
 

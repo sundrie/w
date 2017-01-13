@@ -6,17 +6,14 @@ use \W\Model\ConnectionModel;
 class insertUserModel extends Model
 {
   public function insertUser($newUser){
+    // on instancie un objet de connexion
     $dbhConnect = new ConnectionModel();
+    // On appelle la méthode pour créer un PDO à notre bdd
     $instance = $dbhConnect -> getDbh();
-    // requête d'ajout d'un article
+    // requête d'ajout d'un utilisateur
     $sql = "INSERT INTO users (username, email, password)
     VALUES ('".$newUser['username']."','".$newUser['email']."','".$newUser['password']."')";
 
     $insertSuccess = $instance->exec($sql);
   }
-
-
-  // On fait notre PROPRE INSERTION A NOUS BORDEL DE CHIOTTES !!!!!
-
-  // Pour la connexion sebastien le magicien à dit qu'il fallait stocker les mots de passes hachés dans la BDD car c'est ce qui est utilisé pour faire les tests
 }
